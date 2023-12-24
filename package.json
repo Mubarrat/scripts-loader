@@ -1,0 +1,39 @@
+{
+  "name": "@mubarrat/scripts-loader",
+  "version": "1.0.0",
+  "description": "A lightweight and versatile script loader library for dynamically loading JavaScript files in web applications. Simplify script management, handle dependencies, and ensure smooth integration of external scripts with flexible loading strategies.",
+  "scripts": {
+    "build": "tsc && node prependComment.js && terser ./dist/scripts-loader.js --comments all -o ./dist/scripts-loader.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mubarrat/scripts-loader.git"
+  },
+  "keywords": [
+    "script-loader",
+    "scripts-loader",
+    "script",
+    "scripts",
+    "loader",
+    "js",
+    "library",
+    "js-library",
+    "dynamic",
+    "dependency",
+    "web",
+    "development"
+  ],
+  "author": "Mubarrat Hasan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mubarrat/scripts-loader/issues"
+  },
+  "homepage": "https://github.com/Mubarrat/scripts-loader#readme",
+  "devDependencies": {
+    "terser": "^5.26.0",
+    "typescript": "^5.3.3"
+  },
+  "publishConfig": {
+    "@mubarrat:registry": "https://npm.pkg.github.com/"
+  }
+}
