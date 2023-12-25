@@ -1,5 +1,5 @@
 /*!
- * Scripts-Loader JavaScript Library v1.0.2
+ * Scripts-Loader JavaScript Library v1.0.3
  * https://github.com/Mubarrat/scripts-loader/
  * 
  * Released under the MIT license
@@ -168,7 +168,7 @@ function validateAsScriptArray(data) {
         }
         return Object.assign(new ScriptObject, {
             name: name || "",
-            sources: sources || (source ? [sources] : []),
+            sources: sources || (source ? [source] : []),
             dependencies: dependencies || (dependency ? [dependency] : [])
         });
     }));

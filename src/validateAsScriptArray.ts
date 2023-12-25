@@ -75,7 +75,7 @@ function validateAsScriptArray(data: {}[]): ScriptArray {
       name: name || "",
 
       // Return sources
-      sources: sources || (source ? [sources] : []),
+      sources: sources || (source ? [source] : []),
 
       // Return additional dependencies
       dependencies: dependencies || (dependency ? [dependency] : [])
