@@ -1,5 +1,5 @@
 /*!
- * Scripts-Loader JavaScript Library v1.0.1
+ * Scripts-Loader JavaScript Library v1.0.2
  * https://github.com/Mubarrat/scripts-loader/
  * 
  * Released under the MIT license

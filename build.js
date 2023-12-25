@@ -11,4 +11,12 @@ writeFileSync(
  */
 ${readFileSync('./dist/scripts-loader.js')}`
 ),
-minify(String(readFileSync('./dist/scripts-loader.js')), { format: { comments: "all" } }).then(x => writeFileSync('./dist/scripts-loader.min.js', x.code))
+minify(String(readFileSync('./dist/scripts-loader.js')),
+  {
+    sourceMap: {
+      filename: "scripts-loader.min.js",
+      content: readFileSync('./dist/scripts-loader.js.map', 'utf-8'),
+      includeSources: true,
+      root: "./src/"
+    }
+  }).then(x => (writeFileSync('./dist/scripts-loader.min.js', x.code + "\n//# sourceMappingURL=scripts-loader.min.js.map"), writeFileSync('./dist/scripts-loader.min.js.map', x.map)))
