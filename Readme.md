@@ -29,7 +29,8 @@ Upon download and extraction, you'll find a structure resembling this:
 scripts-loader
 ├── scripts-loader.js
 ├── scripts-loader.js.map
-└── scripts-loader.min.js
+├── scripts-loader.min.js
+└── scripts-loader.min.js.map
 ```
 
 ### Link
