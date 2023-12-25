@@ -25,7 +25,7 @@
 /**
  * An simple implementation that the data is xml or json.
  * @param data The data to be checked.
- * @returns If data is in xml, "xml". Or if data is in json, "json". Or a empty string will be returned.
+ * @returns If data is in xml, "xml". Or if data is in json, "json". Or an empty string will be returned.
  */
 function detectFormatXmlOrJson(data: string): "xml" | "json" | "" {
 
