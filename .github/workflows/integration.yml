@@ -1,0 +1,71 @@
+name: Build and Release
+
+on: workflow_dispatch
+
+jobs:
+  build-project:
+    name: Build Project
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        id: install-dependencies
+        run: npm install
+      - name: Build
+        id: build
+        run: npm run build
+      - name: Upload artifact for releasing
+        id: upload-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./dist
+
+  release-project:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+    name: Release Project
+    needs: build-project
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v3
+      - name: Download Artifact
+        id: download-artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./dist
+      - name: Get NPM Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+      - name: Archive Release
+        id: archive-release
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: release.zip
+          directory: ./dist
+          #exclusions: '*.git* /*node_modules/* .editorconfig package-lock.json'
+      - name: Create release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.package-version.outputs.current-version}}
+          release_name: Release v${{ steps.package-version.outputs.current-version}}
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: ./dist/release.zip
+          asset_name: release-v${{ steps.package-version.outputs.current-version}}.zip
+          asset_content_type: application/zip
