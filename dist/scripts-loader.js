@@ -1,5 +1,5 @@
 /*!
- * Scripts-Loader JavaScript Library v1.0.0
+ * Scripts-Loader JavaScript Library v1.0.1
  * https://github.com/Mubarrat/scripts-loader/
  * 
  * Released under the MIT license
@@ -134,7 +134,7 @@ class ScriptObject {
         this.promises = [];
     }
 }
-const $ls = Object.assign((data) => $ls[detectFormatXmlOrJson(data)](data), {
+const $ls = Object.assign((data) => typeof data === "string" ? $ls[detectFormatXmlOrJson(data)](data) : $ls.document(data), {
     xml: Object.assign((data) => $ls.xml.document(data), {
         document(data) { loadScript(validateXmlAsScriptArray(data), "document"); },
         ajax(data) { loadScript(validateXmlAsScriptArray(data), "ajax"); }
@@ -143,6 +143,8 @@ const $ls = Object.assign((data) => $ls[detectFormatXmlOrJson(data)](data), {
         document(data) { loadScript(validateJsonAsScriptArray(data), "document"); },
         ajax(data) { loadScript(validateJsonAsScriptArray(data), "ajax"); }
     }),
+    document(data) { loadScript(validateAsScriptArray(data), "document"); },
+    ajax(data) { loadScript(validateAsScriptArray(data), "ajax"); },
     ""() { throw new Error("Unknown type"); }
 });
 function validateAsScriptArray(data) {

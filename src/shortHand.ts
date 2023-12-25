@@ -25,7 +25,7 @@
 /**
  * Define an shortname with objects.
  */
-const $ls = Object.assign((data: string) => $ls[detectFormatXmlOrJson(data)](data), {
+const $ls = Object.assign((data: string | {}[]) => typeof data === "string" ? $ls[detectFormatXmlOrJson(data)](data) : $ls.document(data), {
 
   // Define xml with default is document
   xml: Object.assign((data: string) => $ls.xml.document(data), {
@@ -33,7 +33,7 @@ const $ls = Object.assign((data: string) => $ls[detectFormatXmlOrJson(data)](dat
     // Define document function.
     document(data: string) { loadScript(validateXmlAsScriptArray(data), "document") },
 
-    // Define ajax function; shouldn't be used.
+    // Define ajax function.
     ajax(data: string) { loadScript(validateXmlAsScriptArray(data), "ajax") }
   }),
 
@@ -43,9 +43,15 @@ const $ls = Object.assign((data: string) => $ls[detectFormatXmlOrJson(data)](dat
     // Define document function.
     document(data: string) { loadScript(validateJsonAsScriptArray(data), "document") },
 
-    // Define ajax function; shouldn't be used.
+    // Define ajax function.
     ajax(data: string) { loadScript(validateJsonAsScriptArray(data), "ajax") }
   }),
+
+  // Define document function.
+  document(data: {}[]) { loadScript(validateAsScriptArray(data), "document") },
+
+  // Define ajax function.
+  ajax(data: {}[]) { loadScript(validateAsScriptArray(data), "ajax") },
 
   // Define an empty case
   ""() { throw new Error("Unknown type") }
