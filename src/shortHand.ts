@@ -23,35 +23,30 @@
  */
 
 /**
- * It validates xml string as script array.
- * @param data The data to be parsed.
- * @returns Returns an script array.
+ * Define an shortname with objects.
  */
-function validateXmlAsScriptArray(data: string): ScriptArray {
-  
-  // Initialize a new DOM Parser
-  const parser = new DOMParser();
+const $ls = Object.assign((data: string) => $ls[detectFormatXmlOrJson(data)](data), {
 
-  // Parse xml
-  const xmlDoc = parser.parseFromString(data, "text/xml");
+  // Define xml with default is document
+  xml: Object.assign((data: string) => $ls.xml.document(data), {
 
-  // Namespace
-  const namespace = "http://schemas.mubarrat.com/scripts-loader/";
+    // Define document function.
+    document(data: string) { loadScript(validateXmlAsScriptArray(data), "document") },
 
-  // Mapping and return to main validator to validate
-  return validateAsScriptArray([...xmlDoc.getElementsByTagNameNS(namespace, "script")].map(x => {
+    // Define ajax function; shouldn't be used.
+    ajax(data: string) { loadScript(validateXmlAsScriptArray(data), "ajax") }
+  }),
 
-    // Returns
-    return {
+  // Define json
+  json: Object.assign((data: string) => $ls.xml.document(data), {
 
-      // Define name
-      name: x.getAttribute("name"),
+    // Define document function.
+    document(data: string) { loadScript(validateJsonAsScriptArray(data), "document") },
 
-      // Define sources
-      sources: [...x.getElementsByTagNameNS(namespace, "source")].map(x => x.textContent),
+    // Define ajax function; shouldn't be used.
+    ajax(data: string) { loadScript(validateJsonAsScriptArray(data), "ajax") }
+  }),
 
-      // Define dependencies
-      dependencies: [...x.getElementsByTagNameNS(namespace, "dependency")].map(x => x.textContent)
-    }
-  }));
-}
+  // Define an empty case
+  ""() { throw new Error("Unknown type") }
+});

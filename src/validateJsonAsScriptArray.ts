@@ -22,6 +22,11 @@
  * SOFTWARE.
  */
 
+/**
+ * It validates json as script array.
+ * @param data The data to be parsed.
+ * @returns Returns the parsed script array.
+ */
 function validateJsonAsScriptArray(data: string): ScriptArray {
 
   // Check if data is an string

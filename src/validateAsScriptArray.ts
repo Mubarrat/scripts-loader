@@ -68,16 +68,17 @@ function validateAsScriptArray(data: {}[]): ScriptArray {
       throw new Error('source and sources both are defined');
     }
 
-    return {
-
-      // Return sources
-      sources: sources || [source],
+    // Return script object with assigned properties
+    return Object.assign(new ScriptObject, {
 
       // Return name
       name: name || "",
 
+      // Return sources
+      sources: sources || (source ? [sources] : []),
+
       // Return additional dependencies
-      dependencies: dependencies || [dependency]
-    };
+      dependencies: dependencies || (dependency ? [dependency] : [])
+    });
   }));
 }

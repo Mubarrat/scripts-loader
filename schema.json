@@ -17,67 +17,34 @@
         "properties": {
           "source": {
             "type": "string",
-            "description": "The URL or path to the JavaScript file.",
-            "not": { "required": ["sources"] }
+            "description": "The URL or path to the JavaScript file."
           }
-        }
-      },
-      {
-        "properties": {
-          "sources": {
-            "type": "array",
-            "items": { "type": "string" },
-            "minItems": 1,
-            "description": "An array of URLs or paths to the JavaScript file with fallbacks.",
-            "not": { "required": ["source"] }
-          }
-        }
-      },
-      {
-        "properties": {
-          "source": {
-            "type": "string",
-            "description": "The URL or path to the JavaScript file.",
-            "not": { "required": ["sources"] }
-          },
-          "dependency": {
-            "type": "string",
-            "description": "A JavaScript file name this file depends on. Optional, but can't be defined if 'dependencies' is present.",
+        },
+        "required": ["source"],
+        "not": { "required": ["sources"] },
+        "oneOf": [
+          {},
+          {
+            "properties": {
+              "dependency": {
+                "type": "string",
+                "description": "A JavaScript file name this file depends on. Optional, but can't be defined if 'dependencies' is present."
+              }
+            },
             "not": { "required": ["dependencies"] }
-          }
-        }
-      },
-      {
-        "properties": {
-          "sources": {
-            "type": "array",
-            "items": { "type": "string" },
-            "minItems": 1,
-            "description": "An array of URLs or paths to the JavaScript file with fallbacks.",
-            "not": { "required": ["source"] }
           },
-          "dependency": {
-            "type": "string",
-            "description": "A JavaScript file name this file depends on. Optional, but can't be defined if 'dependencies' is present.",
-            "not": { "required": ["dependencies"] }
-          }
-        }
-      },
-      {
-        "properties": {
-          "source": {
-            "type": "string",
-            "description": "The URL or path to the JavaScript file.",
-            "not": { "required": ["sources"] }
-          },
-          "dependencies": {
-            "type": "array",
-            "items": { "type": "string" },
-            "minItems": 0,
-            "description": "An array of JavaScript file names this file depends on. Optional, but can't be defined if 'dependency' is present.",
+          {
+            "properties": {
+              "dependencies": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 0,
+                "description": "An array of JavaScript file names this file depends on. Optional, but can't be defined if 'dependency' is present."
+              }
+            },
             "not": { "required": ["dependency"] }
           }
-        }
+        ]
       },
       {
         "properties": {
@@ -85,17 +52,34 @@
             "type": "array",
             "items": { "type": "string" },
             "minItems": 1,
-            "description": "An array of URLs or paths to the JavaScript file with fallbacks.",
-            "not": { "required": ["source"] }
+            "description": "An array of URLs or paths to the JavaScript file with fallbacks."
+          }
+        },
+        "required": ["sources"],
+        "not": { "required": ["source"] },
+        "oneOf": [
+          {},
+          {
+            "properties": {
+              "dependency": {
+                "type": "string",
+                "description": "A JavaScript file name this file depends on. Optional, but can't be defined if 'dependencies' is present."
+              }
+            },
+            "not": { "required": ["dependencies"] }
           },
-          "dependencies": {
-            "type": "array",
-            "items": { "type": "string" },
-            "minItems": 0,
-            "description": "An array of JavaScript file names this file depends on. Optional, but can't be defined if 'dependency' is present.",
+          {
+            "properties": {
+              "dependencies": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 0,
+                "description": "An array of JavaScript file names this file depends on. Optional, but can't be defined if 'dependency' is present."
+              }
+            },
             "not": { "required": ["dependency"] }
           }
-        }
+        ]
       }
     ],
     "minItems": 0

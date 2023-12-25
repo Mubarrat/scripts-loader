@@ -23,7 +23,7 @@
  */
 
 /**
- * Define a class named script object.
+ * A class for script object.
  */
 class ScriptObject {
 
@@ -41,4 +41,9 @@ class ScriptObject {
    * Dependencies for this javaScript
    */
   dependencies: string[] = [];
+
+  /**
+   * An promise list. Merge promises here
+   */
+  promises: Promise<void>[] = [];
 }
