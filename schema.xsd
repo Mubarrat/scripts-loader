@@ -3,7 +3,7 @@
   <xs:element name="scripts">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="script" maxOccurs="0" maxOccurs="unbounded">
+        <xs:element name="script" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="source" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
