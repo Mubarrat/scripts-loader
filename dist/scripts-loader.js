@@ -1,5 +1,5 @@
 /*!
- * Scripts-Loader JavaScript Library v1.0.3
+ * Scripts-Loader JavaScript Library v1.0.4
  * https://github.com/Mubarrat/scripts-loader/
  * 
  * Released under the MIT license
@@ -134,18 +134,82 @@ class ScriptObject {
         this.promises = [];
     }
 }
-const $ls = Object.assign((data) => typeof data === "string" ? $ls[detectFormatXmlOrJson(data)](data) : $ls.document(data), {
-    xml: Object.assign((data) => $ls.xml.document(data), {
-        document(data) { loadScript(validateXmlAsScriptArray(data), "document"); },
-        ajax(data) { loadScript(validateXmlAsScriptArray(data), "ajax"); }
+const $ls = Object.assign((data) => {
+    if (typeof data !== "string" && !Array.isArray(data)) {
+        throw new Error("`data` should be either string or an object array.");
+    }
+    if (typeof data === "string") {
+        switch (detectFormatXmlOrJson(data)) {
+            case "xml":
+                $ls.xml(data);
+                break;
+            case "json":
+                $ls.json(data);
+                break;
+            default:
+                throw new Error("Unknown type");
+        }
+    }
+    else {
+        $ls.document(data);
+    }
+}, {
+    xml: Object.assign((data) => {
+        if (typeof data !== "string") {
+            throw new Error("data should be string");
+        }
+        $ls.xml.document(data);
+    }, {
+        document(data) {
+            if (typeof data !== "string") {
+                throw new Error("data should be string");
+            }
+            loadScript(validateXmlAsScriptArray(data), "document");
+        },
+        ajax(data) {
+            if (typeof data !== "string") {
+                throw new Error("data should be string");
+            }
+            loadScript(validateXmlAsScriptArray(data), "ajax");
+        }
     }),
-    json: Object.assign((data) => $ls.xml.document(data), {
-        document(data) { loadScript(validateJsonAsScriptArray(data), "document"); },
-        ajax(data) { loadScript(validateJsonAsScriptArray(data), "ajax"); }
+    json: Object.assign((data) => {
+        if (typeof data !== "string") {
+            throw new Error("data should be string");
+        }
+        $ls.json.document(data);
+    }, {
+        document(data) {
+            if (typeof data !== "string") {
+                throw new Error("data should be string");
+            }
+            loadScript(validateJsonAsScriptArray(data), "document");
+        },
+        ajax(data) {
+            if (typeof data !== "string") {
+                throw new Error("data should be string");
+            }
+            loadScript(validateJsonAsScriptArray(data), "ajax");
+        }
     }),
-    document(data) { loadScript(validateAsScriptArray(data), "document"); },
-    ajax(data) { loadScript(validateAsScriptArray(data), "ajax"); },
-    ""() { throw new Error("Unknown type"); }
+    document(data) {
+        if (!Array.isArray(data)) {
+            throw new Error("data should be string");
+        }
+        loadScript(validateAsScriptArray(data), "document");
+    },
+    ajax(data) {
+        if (!Array.isArray(data)) {
+            throw new Error("data should be string");
+        }
+        loadScript(validateAsScriptArray(data), "ajax");
+    },
+    url(url) {
+        const xhr = new XMLHttpRequest;
+        xhr.open("GET", url);
+        xhr.onreadystatechange = () => xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 && $ls(xhr.responseText);
+        xhr.send();
+    }
 });
 function validateAsScriptArray(data) {
     if (!Array.isArray(data)) {
