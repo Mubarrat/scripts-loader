@@ -5,26 +5,26 @@
 The Scripts Loader is a lightweight and adaptable script loader library crafted specifically to dynamically load JavaScript files within web applications. Its versatile nature simplifies script management, adeptly handles dependencies, and ensures the seamless integration of external scripts. With its flexible loading strategies, it provides a reliable solution for effortlessly managing script loading complexities, empowering developers to streamline their web application development process.
 
 > [!NOTE]
-> While the library supports TypeScript during development, the released version exclusively includes JavaScript files and a map file. This deliberate choice ensures ease of use without any additional dependencies or frameworks.
+> While the library supports TypeScript during development, the released version includes only JavaScript files and a map file. This ensures ease of use without additional dependencies or frameworks.
 
 ## Purpose
 
-Ever experienced the frustration of repeatedly pressing <kbd>Ctrl</kbd> + <kbd>F5</kbd> on a website, only to have certain JavaScript files stubbornly refuse to load? The Scripts Loader serves as a steadfast solution to this common issue encountered during script loading via HTML. The challenge often arises from the disparate nature of JavaScript files—while some stand independently, others rely on additional files for proper execution. This disparity in dependencies leads to erratic behavior, causing script failures that disrupt the entire functionality of a web application. Our library confronts these challenges directly, promising seamless and dependable script loading without the headache of missing dependencies.
+Ever experienced the frustration of repeatedly pressing <kbd>Ctrl</kbd> + <kbd>F5</kbd> on a website, only for certain JavaScript files that refuse to load? The Scripts Loader is a reliable solution to this common issue faced during script loading via HTML. The challenge often arises from the JavaScript files—while some stand independently, others depend on additional files for proper execution. This variation in dependencies leads to inconsistent behavior, causing script failures that disrupt entire web applications. Our library encounters these challenges head-on, ensuring seamless and dependable script loading without the bother of missing dependencies.
 
-With seamless support for both JSON and XML syntaxes, integrating and utilizing this library is a breeze. Its intuitive design empowers developers to effortlessly manage and load scripts, simplifying even the most complex dependencies. Bid farewell to wrestling with intricate script loading processes—the Scripts Loader streamlines integration, providing a dependable and streamlined solution.
+With innate support for both JSON and XML syntaxes, integrating and utilizing this library becomes effortlessly intuitive. Its user-friendly design empowers developers to manage and load scripts effortlessly, simplifying even the most complex dependencies. Bid farewell to wrestle with intricate script loading processes—the Scripts Loader streamlines integration, offering a dependable and streamlined solution.
 
 ### Why No CSS Support?
 
-You might wonder why CSS support isn't included in this library. Unlike JavaScript files that often demand precise handling for dependencies, CSS files, being dynamically loaded, tend to be more self-contained. Typically, CSS files don't heavily rely on external dependencies for their functionality; they can often resolve themselves even if additional dependencies aren't explicitly specified.
+Curious why CSS support isn't part of this library. Unlike JavaScript files that demand precise dependency handling, CSS files, dynamically loaded, tend to be more self-contained. Typically, CSS files don't heavily rely on external dependencies for their functionality; they can often resolve themselves even if additional dependencies aren't explicitly specified.
 
-By focusing specifically on JavaScript loading and dependency management, we've tailored our library to confront the critical challenges associated with script loading, while ensuring simplicity and effectiveness in handling intricate JavaScript dependencies.
+By focusing specifically on JavaScript loading and dependency management, our library addresses the critical challenges associated with script loading, maintaining simplicity, and effectiveness in handling intricate JavaScript dependencies.
 
 ## Installation
 ### Download
 Get our latest [release files](https://github.com/Mubarrat/scripts-loader/releases) directly from this GitHub repository.
 
 #### Contents
-Upon download and extraction, you'll find a structure resembling this:
+Download and extract it, you'll find a structure like this:
 ```
 scripts-loader
 ├── scripts-loader.js
@@ -61,10 +61,10 @@ Explore our [Wiki](https://github.com/Mubarrat/scripts-loader/wiki) to superchar
 
 For developers operating within Integrated Development Environments (IDEs), these schemas offer structured formats to enhance the editing experience:
 
-1. [JSON Schema](https://cdn.jsdelivr.net/gh/Mubarrat/scripts-loader@1.x/schema.json)
+1. [JSON Schema](https://cdn.jsdelivr.net/gh/Mubarrat/scripts-loader@main/schema.json)
    - JSON format schema for validation and code hinting in compatible IDEs.
 
-2. [XSD Schema](https://cdn.jsdelivr.net/gh/Mubarrat/scripts-loader@1.x/schema.xsd)
+2. [XSD Schema](https://cdn.jsdelivr.net/gh/Mubarrat/scripts-loader@main/schema.xsd)
    - XSD format schema aiding XML-based editing environments, facilitating validation and autocomplete functionalities.
 
 These schemas prove invaluable, ensuring script compatibility, validating configurations, and enhancing the overall development process within supported IDEs.
