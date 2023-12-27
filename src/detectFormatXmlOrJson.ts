@@ -30,10 +30,10 @@
 function detectFormatXmlOrJson(data: string): "xml" | "json" | "" {
 
   // Case the first char
-  switch ([data.trim().charAt(0), data.trim().charAt(1)]) {
+  switch (data.trim().charAt(0)) {
 
-    // If starts with < and ends with >
-    case ['<', '>']:
+    // If starts with `<`
+    case '<':
 
       // Surround with try/catch
       try {
@@ -52,9 +52,9 @@ function detectFormatXmlOrJson(data: string): "xml" | "json" | "" {
         return "";
       }
 
-    // If starts and ends with either {} or []
-    case ['{', '}']:
-    case ['[', ']']:
+    // If starts with `{` or `[`
+    case '{':
+    case '[':
 
       // Surround with try/catch
       try {

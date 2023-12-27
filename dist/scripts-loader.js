@@ -1,5 +1,5 @@
 /*!
- * Scripts-Loader JavaScript Library v1.0.5
+ * Scripts-Loader JavaScript Library v1.0.6
  * https://github.com/Mubarrat/scripts-loader/
  * 
  * Released under the MIT license
@@ -7,8 +7,8 @@
  */
 "use strict";
 function detectFormatXmlOrJson(data) {
-    switch ([data.trim().charAt(0), data.trim().charAt(1)]) {
-        case ['<', '>']:
+    switch (data.trim().charAt(0)) {
+        case '<':
             try {
                 new DOMParser().parseFromString(data, "text/xml");
                 return "xml";
@@ -16,8 +16,8 @@ function detectFormatXmlOrJson(data) {
             catch (_a) {
                 return "";
             }
-        case ['{', '}']:
-        case ['[', ']']:
+        case '{':
+        case '[':
             try {
                 JSON.parse(data);
                 return "json";
