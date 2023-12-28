@@ -76,7 +76,10 @@ Visit our [package page](https://github.com/Mubarrat/scripts-loader/pkgs/npm/scr
   {
     "name": "Self",
     "source": "/js/site.js",
-    "dependency": "JQuery"
+    "dependencies": [
+      "JQuery",
+      "Masonry"
+    ]
   }
 ]
 ```
@@ -116,6 +119,8 @@ flowchart TD
     LoadMasonry1 --> |Not Found| LoadMasonry2["https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"]
     LoadMasonry2 --> |Found| CompletedMasonry
     LoadMasonry2 --> |Not Found| FailedMasonry
+
+    CompletedMasonry --> Self
 
     Showdown --> LoadShowdown1["/lib/showdown/showdown.min.js"]
     LoadShowdown1 --> |Found| CompletedShowdown
