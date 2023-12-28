@@ -46,6 +46,88 @@ https://cdn.jsdelivr.net/gh/Mubarrat/scripts-loader@1.x/dist/scripts-loader.min.
 ### For npm Installation
 Visit our [package page](https://github.com/Mubarrat/scripts-loader/pkgs/npm/scripts-loader).
 
+## Implementation and Result
+
+### Implementation
+```json
+[
+  {
+    "name": "JQuery",
+    "sources": [
+      "/lib/jquery/jquery.min.js",
+      "https://code.jquery.com/jquery-3.7.1.min.js",
+      "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    ]
+  },
+  {
+    "name": "Masonry",
+    "sources": [
+      "/lib/masonry/masonry.pkgd.min.js",
+      "https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
+    ]
+  },
+  {
+    "name": "Showdown",
+    "sources": [
+      "/lib/showdown/showdown.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"
+    ]
+  },
+  {
+    "name": "Self",
+    "source": "/js/site.js",
+    "dependency": "JQuery"
+  }
+]
+```
+### Result
+```mermaid
+flowchart TD
+    ScriptsLoader((Scripts-Loader))
+    JQuery[JQuery]
+    Masonry[Masonry]
+    Showdown[Showdown]
+    Self[Self]
+    CompletedJQuery{{Completed}}
+    CompletedMasonry{{Completed}}
+    CompletedShowdown{{Completed}}
+    CompletedSelf{{Completed}}
+    FailedJQuery{{Failed}}
+    FailedMasonry{{Failed}}
+    FailedShowdown{{Failed}}
+    FailedSelf{{Failed}}
+
+    ScriptsLoader --> JQuery
+    ScriptsLoader --> Masonry
+    ScriptsLoader --> Showdown
+
+    JQuery --> LoadJQuery1["/lib/jquery/jquery.min.js"]
+    LoadJQuery1 --> |Found| CompletedJQuery
+    LoadJQuery1 --> |Not Found| LoadJQuery2["https://code.jquery.com/jquery-3.7.1.min.js"]
+    LoadJQuery2 --> |Found| CompletedJQuery
+    LoadJQuery2 --> |Not Found| LoadJQuery3["https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"]
+    LoadJQuery3 --> |Found| CompletedJQuery
+    LoadJQuery3 --> |Not Found| FailedJQuery
+
+    CompletedJQuery --> Self
+
+    Masonry --> LoadMasonry1["/lib/masonry/masonry.pkgd.min.js"]
+    LoadMasonry1 --> |Found| CompletedMasonry
+    LoadMasonry1 --> |Not Found| LoadMasonry2["https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"]
+    LoadMasonry2 --> |Found| CompletedMasonry
+    LoadMasonry2 --> |Not Found| FailedMasonry
+
+    Showdown --> LoadShowdown1["/lib/showdown/showdown.min.js"]
+    LoadShowdown1 --> |Found| CompletedShowdown
+    LoadShowdown1 --> |Not Found| LoadShowdown2["https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"]
+    LoadShowdown2 --> |Found| CompletedShowdown
+    LoadShowdown2 --> |Not Found| FailedShowdown
+
+    Self --> LoadSelf1["/js/site.js"]
+    LoadSelf1 --> |Found| CompletedSelf
+    LoadSelf1 --> |Not Found| FailedSelf
+```
+
 ## Guides
 
 Dive into our comprehensive guides and documentation available in our [Wiki](https://github.com/Mubarrat/scripts-loader/wiki) for detailed instructions and essential resources:
