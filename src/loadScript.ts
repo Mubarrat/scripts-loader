@@ -25,9 +25,9 @@
 /**
  * An function that loads script.
  * @param data The script array where scripts will be loaded.
- * @param renderer The renderer type can either be "document" or "ajax"
+ * @param renderer The renderer type can either be "document" or "ajax" or "fetch"
  */
-function loadScript(data: ScriptArray, renderer: "document" | "ajax") {
+function loadScript(data: ScriptArray, renderer: "document" | "ajax" | "fetch") {
   
   // Switch the cases and set promises
   switch (renderer) {
@@ -123,15 +123,61 @@ function loadScript(data: ScriptArray, renderer: "document" | "ajax") {
         }
       }
       break;
+      
+      // If renderer mode is fetch
+      case "fetch":
+  
+        // Iterate item of given Script Array
+        for (const item of data) {
+  
+          // Check id sources length is zero
+          if (item.sources.length === 0) {
+  
+            // Skip if no sources provided
+            continue;
+          }
+          
+          // It has Additonal dependencies.
+          if (item.dependencies.length > 0) {
+  
+            // Flatten the array.
+            const promises = new Array<Promise<void>>().concat(...item.dependencies.map(dependencyName => {
+  
+              // Find the script object with the given dependency name
+              const dependentScript = data.find(script => script.name === dependencyName);
+  
+              // If dependentScript, return it's promises or tell promise to resolve it.
+              return dependentScript ? dependentScript.promises : Promise.resolve();
+            }));
+  
+            // Merge the existing promises with the promises from dependencies
+            // Do the promise all to load this script
+            Promise.all(item.promises = item.promises.concat(...promises))
+  
+              // Succeed or rejected
+              .then(_ => loadScriptFromFetch([...item.sources]), console.error)
+  
+              // Any error, let's console error
+              .catch(console.error);
+          }
+          
+          // It has no dependencies
+          else {
+  
+            // Use triple dots so that original source doesn't get replaced.
+            item.promises = item.promises.concat(loadScriptFromFetch([...item.sources]));
+          }
+        }
+        break;
 
     // The renderer mode is unknown
     default:
 
       // Throw an error
-      throw new Error('`renderer` is either be "document" or "ajax"');
+      throw new Error('`renderer` is either be "document" or "ajax" or "fetch"');
   }
 
-  // An inner method - for render mode is document
+  // An inner method - for renderer mode is document
   function loadScriptFromSource(sources: string[]): Promise<void> {
 
     // Return new promise
@@ -164,7 +210,7 @@ function loadScript(data: ScriptArray, renderer: "document" | "ajax") {
     });
   }
 
-  // Second inner method - for render mode is ajax
+  // Second inner method - for renderer mode is ajax
   function loadScriptFromAjax(sources: string[]): Promise<void> {
 
     // Return new promise
@@ -212,6 +258,55 @@ function loadScript(data: ScriptArray, renderer: "document" | "ajax") {
 
       // Send the request
       xhr.send();
+    });
+  }
+
+  // Third inner method - for renderer mode is fetch
+  function loadScriptFromFetch(sources: string[]): Promise<void> {
+
+    // Return new promise
+    return new Promise((resolve, reject) => {
+
+      // Reject if all sources failed
+      if (sources.length === 0) {
+
+        reject('All sources failed.');
+        return;
+      }
+
+      fetch(sources.shift() as string)
+
+        // Succeeded
+        .then(resp => {
+
+          // Open the request and get by starting fetching
+          resp.text().then(data => {
+
+            // Surround with try/catch 
+            try {
+
+              // Create a function and load the JavaScript
+              new Function(data)();
+            }
+
+            // Our functions are ok. The problem is in the source.
+            catch (ex) {
+
+              // Let's log the error
+              console.error(ex);
+            }
+
+            // Resolved
+            resolve();
+          });
+        })
+        
+        // Error occurred
+        .catch(err => {
+
+          // Try loading fallbacks
+          loadScriptFromSource(sources).then(resolve).catch(reject)
+        });
     });
   }
 }
