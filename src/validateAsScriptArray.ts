@@ -22,6 +22,11 @@
  * SOFTWARE.
  */
 
+/**
+ * This method returns the validated script array.
+ * @param data The script array to be validated.
+ * @returns Returns the validated script array.
+ */
 function validateAsScriptArray(data: {}[]): ScriptArray {
 
   // Check if the root element is an array

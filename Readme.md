@@ -5,7 +5,7 @@
 The Scripts Loader is a lightweight and adaptable script loader library crafted specifically to dynamically load JavaScript files within web applications. Its versatile nature simplifies script management, adeptly handles dependencies, and ensures the seamless integration of external scripts. With its flexible loading strategies, it provides a reliable solution for effortlessly managing script loading complexities, empowering developers to streamline their web application development process.
 
 > [!NOTE]
-> While the library supports TypeScript during development, the released version includes only JavaScript files and a map file. This ensures ease of use without additional dependencies or frameworks.
+> While the library supports TypeScript during development, the released version includes only JavaScript files, a map file, and typescript declaration file for type definiton. This ensures ease of use without additional dependencies or frameworks.
 
 ## Purpose
 
@@ -27,6 +27,8 @@ Get our latest [release files](https://github.com/Mubarrat/scripts-loader/releas
 Download and extract it, you'll find a structure like this:
 ```
 scripts-loader
+├── scripts-loader.d.ts
+├── scripts-loader.d.ts.map
 ├── scripts-loader.js
 ├── scripts-loader.js.map
 ├── scripts-loader.min.js

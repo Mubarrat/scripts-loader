@@ -1,5 +1,5 @@
 /*!
- * Scripts-Loader JavaScript Library v1.1.0
+ * Scripts-Loader JavaScript Library v1.1.1
  * https://github.com/Mubarrat/scripts-loader/
  * 
  * Released under the MIT license
@@ -51,8 +51,7 @@ function loadScript(data, renderer) {
                         return dependentScript ? dependentScript.promises : Promise.resolve();
                     }));
                     Promise.all(item.promises = item.promises.concat(...promises))
-                        .then(_ => loadScriptFromSource([...item.sources]), console.error)
-                        .catch(console.error);
+                        .then(_ => loadScriptFromSource([...item.sources]), console.error);
                 }
                 else {
                     item.promises = item.promises.concat(loadScriptFromSource([...item.sources]));
@@ -70,8 +69,7 @@ function loadScript(data, renderer) {
                         return dependentScript ? dependentScript.promises : Promise.resolve();
                     }));
                     Promise.all(item.promises = item.promises.concat(...promises))
-                        .then(_ => loadScriptFromAjax([...item.sources]), console.error)
-                        .catch(console.error);
+                        .then(_ => loadScriptFromAjax([...item.sources]), console.error);
                 }
                 else {
                     item.promises = item.promises.concat(loadScriptFromAjax([...item.sources]));
@@ -89,8 +87,7 @@ function loadScript(data, renderer) {
                         return dependentScript ? dependentScript.promises : Promise.resolve();
                     }));
                     Promise.all(item.promises = item.promises.concat(...promises))
-                        .then(_ => loadScriptFromFetch([...item.sources]), console.error)
-                        .catch(console.error);
+                        .then(_ => loadScriptFromFetch([...item.sources]), console.error);
                 }
                 else {
                     item.promises = item.promises.concat(loadScriptFromFetch([...item.sources]));
@@ -110,7 +107,7 @@ function loadScript(data, renderer) {
             scriptE.type = 'text/javascript';
             scriptE.src = sources.shift();
             scriptE.onload = () => resolve();
-            scriptE.onerror = () => loadScriptFromSource(sources).then(resolve).catch(reject);
+            scriptE.onerror = () => loadScriptFromSource(sources).then(resolve, reject);
             document.head.appendChild(scriptE);
         });
     }
@@ -129,7 +126,7 @@ function loadScript(data, renderer) {
                         resolve();
                     }
                     else {
-                        loadScriptFromSource(sources).then(resolve).catch(reject);
+                        loadScriptFromSource(sources).then(resolve, reject);
                     }
                 }
             };
@@ -154,8 +151,8 @@ function loadScript(data, renderer) {
                     resolve();
                 });
             })
-                .catch(err => {
-                loadScriptFromSource(sources).then(resolve).catch(reject);
+                .catch(_ => {
+                loadScriptFromSource(sources).then(resolve, reject);
             });
         });
     }

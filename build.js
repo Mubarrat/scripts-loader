@@ -11,6 +11,17 @@ writeFileSync(
  */
 ${readFileSync('./dist/scripts-loader.js')}`
 ),
+writeFileSync(
+  './dist/scripts-loader.d.ts',
+  `/*!
+ * Scripts-Loader JavaScript Library v${require('./package.json').version || '1.0.0'}
+ * https://github.com/Mubarrat/scripts-loader/
+ * 
+ * Released under the MIT license
+ * https://github.com/Mubarrat/scripts-loader/blob/main/LICENSE
+ */
+${readFileSync('./dist/scripts-loader.d.ts')}`
+),
 minify(String(readFileSync('./dist/scripts-loader.js')),
   {
     sourceMap: {

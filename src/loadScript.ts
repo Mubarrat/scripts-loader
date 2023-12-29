@@ -64,9 +64,6 @@ function loadScript(data: ScriptArray, renderer: "document" | "ajax" | "fetch") 
 
             // Succeed or rejected
             .then(_ => loadScriptFromSource([...item.sources]), console.error)
-
-            // Any error, let's console error
-            .catch(console.error);
         }
         
         // It has no dependencies
@@ -110,9 +107,6 @@ function loadScript(data: ScriptArray, renderer: "document" | "ajax" | "fetch") 
 
             // Succeed or rejected
             .then(_ => loadScriptFromAjax([...item.sources]), console.error)
-
-            // Any error, let's console error
-            .catch(console.error);
         }
         
         // It has no dependencies
@@ -156,9 +150,6 @@ function loadScript(data: ScriptArray, renderer: "document" | "ajax" | "fetch") 
   
               // Succeed or rejected
               .then(_ => loadScriptFromFetch([...item.sources]), console.error)
-  
-              // Any error, let's console error
-              .catch(console.error);
           }
           
           // It has no dependencies
@@ -203,7 +194,7 @@ function loadScript(data: ScriptArray, renderer: "document" | "ajax" | "fetch") 
       scriptE.onload = () => resolve();
 
       // Since error, try loading fallback sources
-      scriptE.onerror = () => loadScriptFromSource(sources).then(resolve).catch(reject);
+      scriptE.onerror = () => loadScriptFromSource(sources).then(resolve, reject);
 
       // Append to the child of head
       document.head.appendChild(scriptE);
@@ -251,7 +242,7 @@ function loadScript(data: ScriptArray, renderer: "document" | "ajax" | "fetch") 
           else {
 
             // Try loading fallbacks
-            loadScriptFromSource(sources).then(resolve).catch(reject)
+            loadScriptFromSource(sources).then(resolve, reject);
           }
         }
       };
@@ -302,10 +293,10 @@ function loadScript(data: ScriptArray, renderer: "document" | "ajax" | "fetch") 
         })
         
         // Error occurred
-        .catch(err => {
+        .catch(_ => {
 
           // Try loading fallbacks
-          loadScriptFromSource(sources).then(resolve).catch(reject)
+          loadScriptFromSource(sources).then(resolve, reject);
         });
     });
   }

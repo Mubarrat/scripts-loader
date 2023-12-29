@@ -2,12 +2,11 @@
   "compilerOptions": {
     "target": "es6",
     "outFile": "./dist/scripts-loader.js",
-    "sourceRoot": "../src/",
-    "removeComments": true,
-    "inlineSources": true,
-    "sourceMap": true,
+    "removeComments": false,
     "strict": true,
-    "esModuleInterop": true
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["./src/*"],
   "exclude": ["node_modules"]

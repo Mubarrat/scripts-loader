@@ -1,9 +1,9 @@
 {
   "name": "@mubarrat/scripts-loader",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A lightweight and versatile script loader library for dynamically loading JavaScript files in web applications. Simplify script management, handle dependencies, and ensure smooth integration of external scripts with flexible loading strategies.",
   "scripts": {
-    "build": "tsc && node build.js"
+    "build": "tsc && tsc -p dtsconfig.json && node build.js"
   },
   "repository": {
     "type": "git",
